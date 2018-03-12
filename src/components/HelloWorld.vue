@@ -126,43 +126,45 @@
   
 </template>
 <script>
-var axios = require ('axios');
-//import {VueTabs, VTab} from 'vue-nav-tabs'
+import axios from 'axios'
+
 export default {
   name: 'HelloWorld',
   // components:'VueTabs,VTab',
   data () {
     return {
       employee: 'Venkatesh koka',
-      url : 'https://api.housecanary.com/v2/property/details',
+      url: 'https://api.housecanary.com/v2/property/details',
       property_details: null,
-      address_details:null,
-      assessment_details:null,
-      myname:'koka'
+      address_details: null,
+      assessment_details: null,
+      myname: 'koka'
     }
   },
   methods: {
-        getHousing: function(){
-          var that = this;
-            axios.get('http://localhost:5000/housingdata')
-            .then(function(response){
-              const k1 = response.data[0]['property/details']['result'];
-              const k2 = response.data[0]['address_info'];
-                that.property_details = k1['property'];
-                that.address_details = k2;
-                that.assessment_details = k1['assessment'];
-                that.myname = 'venkatesh koka';
-                console.log(k1);
-            }).catch(function (error) {
-                console.log(error);
-                });
-      } 
-    },
-     created (){
-     console.log('Before mounted');
-     this.getHousing();
-      
-    },
+    getHousing () {
+      axios.get('https://cors-anywhere.herokuapp.com/' + this.url, {
+        auth: {
+          username: 'JR59KN5RAUBL8J1PQWM9',
+          password: 'iXQeq8myjh0RC4xt5UQ2NJ9YUlnB7DSi'
+        },
+        params: {
+          address: '43 Valmonte Plaza',
+          zipcode: '90274'
+        }
+      })
+        .then(response => {
+          const k1 = response.data[0]['property/details']['result']
+          const k2 = response.data[0]['address_info']
+          this.property_details = k1['property']
+          this.address_details = k2
+          this.assessment_details = k1['assessment']
+          this.myname = 'venkatesh koka'
+          console.log(k1)
+        })
+        .catch(error => console.log(error))
+    }
+  }
 }
 </script>
 
